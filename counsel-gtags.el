@@ -175,7 +175,9 @@ This variable does not have any effect unless
 
 (defun counsel-gtags--read-tag (type)
   (let ((default-val (and counsel-gtags-use-input-at-point (thing-at-point 'symbol)))
-        (prompt (assoc-default type counsel-gtags--prompts)))
+        (prompt (assoc-default type counsel-gtags--prompts))
+        (ivy-case-fold-search-default (or (and counsel-gtags-ignore-case 'always)
+                                          ivy-case-fold-search-default)))
     (ivy-read prompt (counsel-gtags--complete-candidates type)
               :initial-input default-val
               :unwind (lambda ()
